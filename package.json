@@ -1,0 +1,15 @@
+{
+  "name": "firstmakersagent",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "nwbuild -p 'osx64','win32','win64' --macIcns icons/app.icns src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nw-builder": "^3.5.1"
+  }
+}

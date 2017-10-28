@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="AgentApp">
+  <head>
+    <meta charset="UTF-8">
+    <title>Board Agent</title>
+    <script src="./node_modules/angular/angular.min.js"></script>
+    <script src="./main.js"></script>
+    
+  </head>
+  <body ng-controller="MainController as controller">
+    <h1>{{controller.state}}</h1>
+  
+    <div>
+        <li ng-repeat="pin in controller.pins track by $index">{{$index}}: {{pin.value}} ({{pin.mode}})</li>
+    </div>
+        <!-- All of the Node.js APIs are available in this renderer process. -->
+        We are using Node.js <script>document.write(process.versions.node)</script>,
+        Chromium <script>document.write(process.versions.chromium)</script>,
+        NWJS <script>document.write(process.versions.nw)</script>,
+        and Serialport <script>document.write(require("browser-serialport/package").version)</script>.
+    
+    <br>My IP: {{controller.address}}
+
+    <script src="./controller.js"></script>
+    <script src="./services/board.service.js"></script>
+    <script src="./services/myIp.service.js"></script>
+    
+</body>
+
+
+
+  
+</html>
