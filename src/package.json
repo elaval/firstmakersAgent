@@ -21,5 +21,16 @@
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "window": {
+    "title": "Firstmakers Agent",
+    "toolbar": true,
+    "frame": true,
+    "width": 800,
+    "height": 500,
+    "min_width": 400,
+    "min_height": 200,
+    "max_width": 800,
+    "max_height": 600
+  }
 }

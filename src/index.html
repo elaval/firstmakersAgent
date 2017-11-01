@@ -3,27 +3,72 @@
   <head>
     <meta charset="UTF-8">
     <title>Board Agent</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
     <script src="./node_modules/angular/angular.min.js"></script>
     <script src="./main.js"></script>
     
-  </head>
-  <body ng-controller="MainController as controller">
-    <h1>{{controller.state}}</h1>
-  
-    <div>
-        <li ng-repeat="pin in controller.pins track by $index">{{$index}}: {{pin.value}} ({{pin.mode}})</li>
-    </div>
-        <!-- All of the Node.js APIs are available in this renderer process. -->
-        We are using Node.js <script>document.write(process.versions.node)</script>,
-        Chromium <script>document.write(process.versions.chromium)</script>,
-        NWJS <script>document.write(process.versions.nw)</script>,
-        and Serialport <script>document.write(require("browser-serialport/package").version)</script>.
-    
-    <br>My IP: {{controller.address}}
+    </head>
+    <body ng-controller="MainController as controller">
+        <div class="container">
+            <h1>Firstmakers Connection Agent</h1>
+            <h2>Physical boards connected to this machine</h2>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>port</th>
+                        <th>board</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(port, board) in controller.boards">
+                            <td>{{port}}</td>
+                            <td ng-if="board">{{board.currentState}}</td>
+                            <td ng-if="!board">No board</td>
+                        </tr>
+                </tbody>
+            </table>
+                
+            <h2>Boards data</h2>
+            
+            <div ng-repeat="(boardName, board) in controller.boards">
+                <h3>{{boardName}}</h3>
+                
+                <div class="row" ng-if="board.currentState==='connected'">
+                    <div ng-repeat="pin in board.pins track by $index" class="small col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            {{$index}}: {{pin.value}} ({{pin.mode}})
+                            <label class="checkbox-inline">
+                                <input type="checkbox" id="inlineCheckbox1" ng-model="pin.value" ng-true-value="1" ng-false-value="0"
+                                    ng-change="controller.setPinValue(boardName, $index, pin.value)"
+                                >
+                            </label>
+                            <select 
+                                name="singleSelect" 
+                                ng-model="pin.mode" 
+                                ng-options="item as item for item in pin.supportedModes"
+                                ng-change="controller.setPinMode(boardName, $index, pin.mode)"
+                            >
+                            </select>
+                    </div>
+                </div>
+                </div>  
+            <div>
+            </div>
+                <!-- All of the Node.js APIs are available in this renderer process. -->
+                We are using Node.js <script>document.write(process.versions.node)</script>,
+                Chromium <script>document.write(process.versions.chromium)</script>,
+                NWJS <script>document.write(process.versions.nw)</script>,
+                and Serialport <script>document.write(require("browser-serialport/package").version)</script>.
+            
+            <br>My IP: {{controller.address}}
+      </div>
+      
+
 
     <script src="./controller.js"></script>
     <script src="./services/board.service.js"></script>
     <script src="./services/myIp.service.js"></script>
+    <script src="./node_modules/socket.io-client/dist/socket.io.js"></script>
+    <script src="./node_modules/angular-socket-io/socket.min.js"></script>
     
 </body>
 
