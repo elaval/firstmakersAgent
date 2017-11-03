@@ -4,54 +4,24 @@ const rxjs = require("rxjs");
 
 angular.module("AgentApp")
 .service("BoardService", ["$rootScope", function($rootScope) {
-    const server = require("./my_node_modules/server.js");
-    this.communicationsController = require("./my_node_modules/communicationController.js");
+    const PIN_MODES = {
+        0 : 'INPUT',
+        1 : 'OUTPUT',
+        2 : 'ANALOG',
+        3 : 'PWM',
+        4 : 'SERVO',
+        5 : 'SHIFT',
+        6 : 'I2C',
+        7 : 'ONEWIRE',
+        8 : 'STEPPER',
+        10 : 'SERIAL',
+        11 : 'PULLUP',
+        127 : 'IGNORE',
+        16 : 'UNKOWN'
+    }
 
-    this.pinsSubject = new rxjs.Subject();
-    this.pinsObs = this.pinsSubject.asObservable();
-
-    this.boardsSubject = new rxjs.Subject();
-    this.boardsObservable = this.boardsSubject.asObservable();
-
-    this.boardSubject = new rxjs.Subject();
-    this.boardObservable = this.boardSubject.asObservable();    
-    
-    this.updateSubject = new rxjs.Subject();
-    this.update = this.updateSubject.asObservable();
-
-    this.communicationsController.boardObservable.subscribe((board) => {
-        this.boardSubject.next(board);
-
-        board.update.subscribe(() => {
-            this.updateSubject.next();
-        })
-    });
-
-    this.communicationsController.boardsObservable.subscribe((boards) => {
-
-        this.boardsSubject.next(boards);
-    
-        /*
-        this.board.newData.subscribe(() => {
-            this.pinsSubject.next(this.pins);
-            //server.io.emit("data", this.pins)
-        });
-    
-    
-        this.board.analogRead.subscribe((d,e) => {
-            server.io.emit("analogRead", d,e)
-        });
-    
-        this.board.digitalRead.subscribe((d,e) => {
-            server.io.emit("digitalRead", d,e)
-        });
-        */
-    })
-
-    
-
-
-
-
+    this.getPinModeDesc = function (mode) {
+        return PIN_MODES[mode];
+    } 
 
 }])
