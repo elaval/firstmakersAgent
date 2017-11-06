@@ -17,29 +17,49 @@
     
     </head>
     <body ng-controller="MainController as controller">
-        <div class="container">
-            <h1>Firstmakers Connection Agent</h1>
-            <h2>Physical boards connected to this machine</h2>
+        <md-content>
+                    
 
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>port</th>
-                        <th>board</th>
+        <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools">
+                <md-toolbar class="md-hue-2">
+                        <div class="md-toolbar-tools">
+                        <h2 flex="" md-truncate="">Firstmakers Board Agent</h2>
+                        </div>
+                </md-toolbar>
+            </div>
+        </md-toolbar>
+
+        <br>
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+            <span flex="">Physical boards connected to this machine</span>
+            </div>
+        </md-toolbar>
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>port</th>
+                    <th>board</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="(port, board) in controller.boards">
+                        <td>{{port}}</td>
+                        <td ng-if="board">{{board.currentState}}</td>
+                        <td ng-if="!board">No board</td>
                     </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="(port, board) in controller.boards">
-                            <td>{{port}}</td>
-                            <td ng-if="board">{{board.currentState}}</td>
-                            <td ng-if="!board">No board</td>
-                        </tr>
-                </tbody>
-            </table>
-                
-            <h2>Boards data</h2>
-            
-            <md-card ng-repeat="(boardName, board) in controller.boards">
+            </tbody>
+        </table>
+
+        <md-toolbar>
+                <div class="md-toolbar-tools">
+                <span flex="">Boards data</span>
+                </div>
+        </md-toolbar>
+        <md-card ng-repeat="(boardName, board) in controller.boards" ng-if="board.currentState==='connected'">
                 <md-card-title>
                     <md-card-title-text>
                         <span class="md-headline">{{boardName}}</span>
@@ -77,16 +97,15 @@
 
                 </div>  
             <md-card>
-            <md-button ng-click="controller.restartApp()" class="md-accent md-raised">Restart</md-button>
-                    
-            </div>
-                <!-- All of the Node.js APIs are available in this renderer process. -->
-                We are using Node.js <script>document.write(process.versions.node)</script>,
-                Chromium <script>document.write(process.versions.chromium)</script>,
-                NWJS <script>document.write(process.versions.nw)</script>,
-                and Serialport <script>document.write(require("browser-serialport/package").version)</script>.
-            
-            <br>My IP: {{controller.address}}
+                
+        </md-content>
+
+        <md-content>
+            <md-button ng-click="controller.restartApp()" class="md-accent md-raised">Restart</md-button>   
+            <span class="md-caption">My IP: {{controller.address}}</span>            
+        </md-content>
+ 
+           
       </div>
       
 
